@@ -4,5 +4,4 @@ class Flowchart():
 
     def display_flowchart(self):
         return self._steps
-    
-    # methods to read the dictionary
+
