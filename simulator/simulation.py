@@ -6,7 +6,7 @@ from simulator.time_increment import TimeIncrementMixin as TIM
 from simulator.flowchart import Flowchart
 
 # @slow_down(2)
-def a_simulation(trial_id, rng_, dict_flowchart, settings_queue, steps_queue,
+def a_simulation(trial_id, rng_, dict_flowchart, settings_queue,
                  items_queue, budget_schedule_queue, result_queue):
     """Simulation Main Body"""
 

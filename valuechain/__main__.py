@@ -14,7 +14,6 @@ def main():
 
     manager = Manager()
     settings_queue = manager.Queue()
-    steps_queue = manager.Queue()
     items_queue = manager.Queue()
     budget_schedule_queue = manager.Queue()
     result_queue = manager.Queue()
@@ -29,7 +28,7 @@ def main():
     dict_flowchart = steps_read.generate_flowchart()
 
     pool_tuple = [(i, vcs.rng_list[i], dict_flowchart, settings_queue,
-                   steps_queue, items_queue, budget_schedule_queue,
+                   items_queue, budget_schedule_queue,
                    result_queue)
                   for i in range(vcs.num_trials)]
 
