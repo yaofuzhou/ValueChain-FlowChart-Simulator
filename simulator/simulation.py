@@ -6,15 +6,16 @@ from simulator.time_increment import TimeIncrementMixin as TIM
 from simulator.flowchart import Flowchart
 
 # @slow_down(2)
-def a_simulation(trial_id, rng_, dict_flowchart, settings_queue,
-                 items_queue, budget_schedule_queue, result_queue):
+def a_simulation(trial_id, rng_, settings_queue, dict_flowchart,
+                 dict_init_items, budget_schedule_queue, result_queue):
     """Simulation Main Body"""
 
-    ini_datetime, final_datetime, num_bins, probability_log\
+    ini_datetime, final_datetime, num_bins, probability_log \
         = settings_queue.get()
 
-    print(dict_flowchart)
-    flowchart = Flowchart(dict_flowchart)
+    # print(dict_flowchart)
+    # print(dict_init_items)
+    flowchart = Flowchart(dict_flowchart, dict_init_items)
 
     day_delta = timedelta(days=1)
     print(f"Process {os.getpid()}: trial {trial_id} with RNG {rng_}" )

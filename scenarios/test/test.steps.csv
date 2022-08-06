@@ -1,4 +1,4 @@
-id,parent_id,name,type,description,next,min,max,mean,stdev,distribution,weight
+step,parent_id,name,type,description,next,min,max,mean,stdev,distribution,weight
 1,,beginning,step,1st step,,,,,,,
 2,1,next 1,next,,3,,,,,,
 3,,2nd step,step,2nd step,,,,,,,

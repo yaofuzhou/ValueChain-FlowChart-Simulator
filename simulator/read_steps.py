@@ -18,7 +18,8 @@ class ReadSteps():
         with open(self.csv_file) as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
-                self.dict_flowchart[row.pop("id", None)]\
+                id = row.pop("step", None)
+                self.dict_flowchart[id] \
                     = {key: value for key, value in row.items() if value}
         return self.dict_flowchart
 
@@ -26,6 +27,5 @@ class ReadSteps():
 if __name__ == "__main__":
     input_path = "/Users/yaofuzhou/Documents/ValueChainSimulator/valuechain/scenarios/test/"
     a = ReadSteps(input_path)
-    a.read_csv()
 
     print(a.generate_flowchart())
