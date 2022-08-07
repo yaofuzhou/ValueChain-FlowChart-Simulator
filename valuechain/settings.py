@@ -13,6 +13,9 @@ from datetime import date, datetime, timedelta
 import re
 from numpy.random import SeedSequence, default_rng
 
+from auxiliary.read_datetime import str_to_datetime, str_to_later_datetime
+from auxiliary.read_datetime import datetime_accepts, final_datetime_accepts
+
 _settings_file = os.path.join(os.getcwd(), "settings.cfg")
 _results_dir = os.path.join(os.getcwd(), "results/")
 _result_dir_relative = "result_" + "_".join(time.asctime().replace(":", "")
@@ -22,27 +25,6 @@ _result_dir = os.path.join(_results_dir, _result_dir_relative)
 _enable_hyperthreading_accepts = ["true", "false", "yes", "no", "y", "n"]
 _true_accepts = ["true", "yes", "y"]
 _false_accepts = ["false", "no", "n"]
-_ini_datetime_accepts = [
-    "today", "now", "tomorrow", "yesterday", "yyyy-mm-dd",
-    "yyyy-mm-dd HH:MM:SS.SS"
-]
-_final_datetime_accepts = list(
-    (*_ini_datetime_accepts, "\n# +[integer] day(s)", "+HH:MM:SS.SS",
-     "+[integer] day(s) HH:MM:SS.SS")
-)
-
-format_datetime = re.compile(
-    r"(?P<date>(?P<YYYY>\d{4})[-/\.]?(?P<mm>0[1-9]|1[0-2])[-/\.]?"
-    + r"(?P<dd>[0-2][0-9]|3[01]))\s*"
-    + r"(?P<time>(?P<HH>[0-1][0-9]|2[0-3]):?(?P<MM>[0-5][0-9]):?"
-    + r"(?P<SS>[0-5][0-9](\.\d*)?))?"
-)
-
-format_delta_daytime = re.compile(
-    r"(?=\S)(((?P<d_day>^[1-9]\d*)\s*(day|days|day\(s\))\s*)?"
-    + r"(?P<d_time>(?P<d_HH>[0-1][0-9]|2[0-3]):?(?P<d_MM>[0-5][0-9]):?"
-    + r"(?P<d_SS>[0-5][0-9](\.\d*)?)?))"
-    )
 
 input_path_default = "scenarios/input/"
 seed_default = 20
@@ -73,13 +55,13 @@ def _cre_default_settings_file():
         fout.write("\n")
         fout.write("# Initial datetime of simulation.\n")
         fout.write(
-            f"# Accepts: {', '.join(str(x) for x in _ini_datetime_accepts)}\n"
+            f"# Accepts: {', '.join(str(x) for x in datetime_accepts)}\n"
             )
         fout.write(f"ini_datetime = {ini_datetime_default}\n")
         fout.write("\n")
         fout.write("# Final datetime of simulation.\n")
         fout.write(
-            f"# Accepts: {', '.join(str(x) for x in _final_datetime_accepts)}"
+            f"# Accepts: {', '.join(str(x) for x in final_datetime_accepts)}"
             + "\n"
             )
         fout.write(f"final_datetime = {final_datetime_default}\n")
@@ -155,142 +137,19 @@ else:
 
             elif line.lstrip().startswith("ini_datetime"):
                 ini_datetime = line.replace("ini_datetime", "") \
-                               .replace("=", "") \
-                               .replace(" ", "").replace("'", "") \
+                               .replace("=", "").replace("'", "") \
                                .replace("\"", "")
-                if ini_datetime.isalpha():
-                    if ini_datetime == "today":
-                        ini_datetime = date.today()
-                        ini_datetime = datetime(
-                            ini_datetime.year, ini_datetime.month,
-                            ini_datetime.day
-                            )
-                    elif ini_datetime == "yesterday":
-                        ini_datetime = date.today() - timedelta(days=1)
-                        ini_datetime = datetime(
-                            ini_datetime.year, ini_datetime.month,
-                            ini_datetime.day
-                            )
-                    elif ini_datetime == "tomorrow":
-                        ini_datetime = date.today() + timedelta(days=1)
-                        ini_datetime = datetime(
-                            ini_datetime.year, ini_datetime.month,
-                            ini_datetime.day
-                            )
-                    elif ini_datetime == "now":
-                        ini_datetime = datetime.now()
-                    else:
-                        raise ValueError(f"ini_datetime accepts \
-                                         {_ini_datetime_accepts} .")
-                else:
-                    datetime_match = format_datetime.fullmatch(ini_datetime)
-                    if datetime_match:
-                        datetime_dict = datetime_match.groupdict()
-                        if datetime_dict.get("HH"):
-                            hours_ = int(datetime_dict.get("HH"))
-                        else:
-                            hours_ = 0
-                        if datetime_dict.get("MM"):
-                            minutes_ = int(datetime_dict.get("MM"))
-                        else:
-                            minutes_ = 0
-                        if datetime_dict.get("SS"):
-                            seconds_ = int(float(datetime_dict.get("SS")))
-                            microsecond_ = int(
-                                1000000*(float(datetime_dict.get("SS")) % 1)
-                                )
-                        else:
-                            seconds_ = 0
-                            microsecond_ = 0
-                        ini_datetime = datetime(
-                            year=int(datetime_dict.get("YYYY")),
-                            month=int(datetime_dict.get("mm")),
-                            day=int(datetime_dict.get("dd")),
-                            hour=hours_,
-                            minute=minutes_,
-                            second=seconds_,
-                            microsecond=microsecond_
-                            )
-                    else:
-                        raise ValueError(
-                            f"ini_datetime accepts {_ini_datetime_accepts}."
-                            )
+                ini_datetime = str_to_datetime(ini_datetime)
 
             elif line.lstrip().startswith("final_datetime"):
                 final_datetime = line.replace("final_datetime", "") \
-                               .replace("=", "") \
-                               .replace(" ", "").replace("'", "") \
+                               .replace("=", "").replace("'", "") \
                                .replace("\"", "")
-                if final_datetime.isalpha():
-                    if final_datetime == "today":
-                        final_datetime = date.today()
-                        final_datetime = datetime(
-                            final_datetime.year, final_datetime.month,
-                            final_datetime.day
-                            )
-                    elif final_datetime == "yesterday":
-                        final_datetime = date.today() - timedelta(days=1)
-                        final_datetime = datetime(
-                            final_datetime.year, final_datetime.month,
-                            final_datetime.day
-                            )
-                    elif final_datetime == "tomorrow":
-                        final_datetime = date.today() + timedelta(days=1)
-                        final_datetime = datetime(
-                            final_datetime.year, final_datetime.month,
-                            final_datetime.day
-                            )
-                    elif final_datetime == "now":
-                        final_datetime = datetime.now()
-                    else:
-                        raise ValueError(f"final_datetime accepts \
-                                         {_final_datetime_accepts}.")
-                elif final_datetime.startswith("+"):
-                    final_datetime = final_datetime.replace("+", "")
-                    delta_daytime_match = format_delta_daytime \
-                        .fullmatch(final_datetime)
-                    if delta_daytime_match:
-                        dalta_daytime_dict = delta_daytime_match.groupdict()
-                        if dalta_daytime_dict.get("d_day"):
-                            days_ = int(dalta_daytime_dict.get("d_day"))
-                        else:
-                            days_ = 0
-                        if dalta_daytime_dict.get("d_HH"):
-                            hours_ = int(dalta_daytime_dict.get("d_HH"))
-                        else:
-                            hours_ = 0
-                        if dalta_daytime_dict.get("d_MM"):
-                            minutes_ = int(dalta_daytime_dict.get("d_MM"))
-                        else:
-                            minutes_ = 0
-                        if dalta_daytime_dict.get("d_SS"):
-                            seconds_ = float(dalta_daytime_dict.get("d_SS"))
-                        else:
-                            seconds_ = 0
-                        final_datetime = ini_datetime + timedelta(
-                            days=days_, hours=hours_, minutes=minutes_,
-                            seconds=seconds_
-                            )
-                    else:
-                        raise ValueError(f"final_datetime accepts \
-                                         {_final_datetime_accepts}.")
+                if final_datetime.lstrip().startswith("+"):
+                    final_datetime = str_to_later_datetime(final_datetime,
+                                                           ini_datetime)
                 else:
-                    datetime_match = format_datetime.fullmatch(final_datetime)
-                    if datetime_match:
-                        datetime_dict = datetime_match.groupdict()
-                        final_datetime = datetime(
-                            year=int(datetime_dict.get("YYYY")),
-                            month=int(datetime_dict.get("mm")),
-                            day=int(datetime_dict.get("dd")),
-                            hour=int(datetime_dict.get("HH")),
-                            minute=int(datetime_dict.get("MM")),
-                            second=int(datetime_dict.get("SS"))
-                            )
-                    else:
-                        raise ValueError(
-                            "final_datetime accepts "
-                            f"{_final_datetime_accepts}."
-                            )
+                    final_datetime = str_to_datetime(final_datetime)
 
             elif line.lstrip().startswith("num_bins"):
                 num_bins = line.replace("num_bins", "").replace("=", "") \
