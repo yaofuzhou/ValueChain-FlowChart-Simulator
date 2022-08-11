@@ -18,6 +18,7 @@ def a_simulation(trial_id, rng_, settings_queue, dict_flowchart,
     print("dict_init_items:\n", dict_init_items, "\n") ##########
     flowchart = Flowchart(dict_flowchart, dict_init_items)
     flowchart.put_items_on_steps()
+    flowchart.move_once()
 
     day_delta = timedelta(days=1) ############
     print(f"Process {os.getpid()}: trial {trial_id} with RNG {rng_}") ############

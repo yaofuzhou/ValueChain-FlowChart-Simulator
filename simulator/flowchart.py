@@ -20,13 +20,18 @@ class Flowchart():
 
     def move_once(self):  # trying to move items once to the next step
         self._previous_state = self._state  # saved for conflict resolution
-        for key, value in self._state.items():
-            for child_key, child_value in value:
-                if child_value["type"] == "next":
-                    next_ = child_value["next"]
 
-                    item_ = self._state.pop()
-                    pass
+        for step_id, items_ in self._state.items():
+            for item_id, item_info in list(items_.items()):
+                if "type" in item_info and item_info["type"] == "next":
+                    next_step = item_info["next"]
+                    print(next_step)
+                if "type" in item_info and item_info["type"] == "item":
+                    moved_item = items_.pop(item_id)
+                    self._state[next_step][item_id] = moved_item
+
+        print("\n state:\n", self._state, "\n")
+
         # self._new_state
 
-    # keep items not let in in the gates?
+    # keep items not let in in the gates? Or where to put awaiting items
