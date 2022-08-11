@@ -1,8 +1,9 @@
 import os
 import csv
 
+
 class ReadItems():
-    """ a singleton to read a input_path/*.items.csv and convert it to a 
+    """ A singleton to read a input_path/*.items.csv and convert it to a
     dictionary for the initial placement of items in the simulation """
 
     def __init__(self, input_path):
@@ -10,8 +11,8 @@ class ReadItems():
         csv_files = [file for file in os.listdir(input_path)
                      if file.endswith('.items.csv')]
         if len(csv_files) != 1:
-            raise ValueError(f"should be only one .items.csv file in the "
-                             +f"{input_path} directory")
+            raise ValueError("should be only one .items.csv file in the "
+                             + f"{input_path} directory")
         self.csv_file = input_path+csv_files[0]
 
     def place_items(self):
@@ -25,7 +26,8 @@ class ReadItems():
 
 
 if __name__ == "__main__":
-    input_path = "/Users/yaofuzhou/Documents/ValueChainSimulator/valuechain/scenarios/test/"
+    input_path = "/Users/yaofuzhou/Documents/ValueChainSimulator/" \
+        + "valuechain/scenarios/test/"
     a = ReadItems(input_path)
 
     print(a.place_items())

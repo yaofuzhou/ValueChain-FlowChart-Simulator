@@ -9,8 +9,7 @@ directory.
 
 import os
 import time
-from datetime import date, datetime, timedelta
-import re
+from datetime import datetime, timedelta
 from numpy.random import SeedSequence, default_rng
 
 from auxiliary.read_datetime import str_to_datetime, str_to_later_datetime

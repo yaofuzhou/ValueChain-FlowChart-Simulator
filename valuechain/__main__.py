@@ -1,7 +1,6 @@
 """ Entry point of Value Chain Simulator
 This is not the start script """
 
-import imp
 from multiprocessing import Pool, Manager
 
 from simulator.decorators import timer
@@ -11,8 +10,9 @@ from simulator.simulation import a_simulation
 @timer
 def main():
     import valuechain.settings as vcs
-    from simulator.read_steps import ReadSteps
-    from simulator.read_items import ReadItems
+    from auxiliary.read_steps import ReadSteps
+    from auxiliary.read_items import ReadItems
+    from auxiliary.input_checks import InputChecks
 
     manager = Manager()
     settings_queue = manager.Queue()
@@ -24,7 +24,8 @@ def main():
     for _ in range(vcs.num_CPUs):
         settings_queue.put((vcs.ini_datetime, vcs.final_datetime, vcs.num_bins,
                             probability_log))
-        
+
+    InputChecks(vcs.input_path)
     steps_read = ReadSteps(vcs.input_path)
     dict_flowchart = steps_read.generate_flowchart()
     items_read = ReadItems(vcs.input_path)

@@ -1,11 +1,11 @@
 item,parent_id,name,description,initial_position,initial_datetime,type,target
-a,,,,,,item,
-b,,,,,,item,
-c,,,,,,item,
-d,,,,,,item,
-e,,,,,,item,
-f,,,,,,item,
-g,,,,,,item,
-h,,,,,,item,
-i,,,,,,item,
-j,,,,,,modifier,i
+a,,,,1,+1 day,item,
+b,,,,1,+1 day,item,
+c,,,,1,+1 day,item,
+d,,,,1,+1 day,item,
+e,,,,1,+1 day,item,
+f,,,,1,+1 day,item,
+g,,,,1,+1 day,item,
+h,,,,1,+1 day,item,
+i,,,,1,+1 day,item,
+j,i,,,,,modifier,22
