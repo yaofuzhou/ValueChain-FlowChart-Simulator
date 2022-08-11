@@ -16,20 +16,19 @@ class ReadSteps():
         self.csv_file = input_path+csv_files[0]
 
     def generate_flowchart(self):
-        dict_csv_file = {}
+        # dict_csv_file = {}
         with open(self.csv_file) as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
                 id = row.pop("step", None)
-                dict_csv_file[id] \
+                self.dict_flowchart[id] \
                     = {key: value for key, value in row.items() if value}
 
-        for key, value in dict_csv_file.items():
-            if "parent_id" not in value:
-                self.dict_flowchart[key] = value
-            else:
+        for key, value in list(self.dict_flowchart.items()):
+            if "parent_id" in value:
                 id = value.pop("parent_id")
-                self.dict_flowchart[id][key] = value
+                component = self.dict_flowchart.pop(key)
+                self.dict_flowchart[id][key] = component
 
         return self.dict_flowchart
 
