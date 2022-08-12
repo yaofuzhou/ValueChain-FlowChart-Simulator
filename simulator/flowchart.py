@@ -3,7 +3,9 @@ class Flowchart():
     def __init__(self, _steps, _items):
         self._steps = _steps
         self._items = _items
-        self._state = self._steps
+        self._state = {**_items, **_steps}
+
+        print("\n state:\n", self._state, "\n")  ##############
 
     def display_flowchart(self):
         return self._steps
@@ -24,10 +26,12 @@ class Flowchart():
         for step_id, items_ in self._state.items():
             if isinstance(items_, dict):
                 for item_id, item_info in list(items_.items()):
-                    if "type" in item_info and item_info["type"] == "next":
+                    if isinstance(item_info, dict) \
+                       and item_info["type"] == "next":
                         next_step = item_info["next"]
-                        print(next_step)
-                    if "type" in item_info and item_info["type"] == "item":
+                        print(next_step)  ###################
+                    if isinstance(item_info, dict)\
+                       and item_info["type"] == "item":
                         moved_item = items_.pop(item_id)
                         self._state[next_step][item_id] = moved_item
 

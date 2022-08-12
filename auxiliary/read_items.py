@@ -5,6 +5,7 @@ from valuechain.settings import ini_datetime
 from auxiliary.read_datetime import start_with_plus
 from auxiliary.read_datetime import str_to_datetime, str_to_later_datetime
 
+
 class ReadItems():
     """ A singleton to read a input_path/*.items.csv and convert it to a
     dictionary for the initial placement of items in the simulation """
@@ -27,7 +28,8 @@ class ReadItems():
                     initial_datetime = row["initial_datetime"]
                     if start_with_plus(initial_datetime):
                         initial_datetime =\
-                            str_to_later_datetime(initial_datetime, ini_datetime)
+                            str_to_later_datetime(initial_datetime,
+                                                  ini_datetime)
                     else:
                         initial_datetime = str_to_datetime(initial_datetime)
                     row["initial_datetime"] = initial_datetime

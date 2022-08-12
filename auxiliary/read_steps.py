@@ -18,7 +18,7 @@ class ReadSteps():
         self.csv_file = input_path+csv_files[0]
 
     def generate_flowchart(self):
-        self.dict_flowchart["time"] = ini_datetime
+        self.dict_flowchart["datetime"] = ini_datetime
         with open(self.csv_file) as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:

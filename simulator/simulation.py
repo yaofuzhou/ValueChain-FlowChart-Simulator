@@ -21,7 +21,7 @@ def a_simulation(trial_id, rng_, settings_queue, dict_flowchart,
     flowchart.move_once()
 
     day_delta = timedelta(days=1) ############
-    print(f"Process {os.getpid()}: trial {trial_id} with RNG {rng_}") ############
+    print(f"Process {os.getpid()}: trial {trial_id} with RNG {rng_}") #########
     print(ini_datetime, final_datetime, num_bins, probability_log) ############
 
     for i in range((final_datetime - ini_datetime).days): #########

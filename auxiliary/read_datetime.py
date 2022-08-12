@@ -29,7 +29,7 @@ format_delta_daytime = re.compile(
 
 def start_with_plus(line):
     if line.replace(" ", "").replace("'", "").replace("\"", "") \
-        .startswith("+"):
+           .startswith("+"):
         return True
     else:
         return False
