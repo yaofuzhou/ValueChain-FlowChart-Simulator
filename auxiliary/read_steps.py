@@ -1,6 +1,8 @@
 import os
 import csv
 
+import valuechain.settings as vcs 
+
 
 class ReadSteps():
     """ A singleton to read a input_path/*.steps.csv and convert it to a
@@ -16,7 +18,7 @@ class ReadSteps():
         self.csv_file = input_path+csv_files[0]
 
     def generate_flowchart(self):
-        # dict_csv_file = {}
+        self.dict_flowchart["time"] = vcs.ini_datetime
         with open(self.csv_file) as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
@@ -25,7 +27,7 @@ class ReadSteps():
                     = {key: value for key, value in row.items() if value}
 
         for key, value in list(self.dict_flowchart.items()):
-            if "parent_id" in value:
+            if isinstance(value, dict) and "parent_id" in value:
                 id = value.pop("parent_id")
                 component = self.dict_flowchart.pop(key)
                 self.dict_flowchart[id][key] = component

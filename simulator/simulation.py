@@ -2,7 +2,7 @@ import os
 from datetime import timedelta
 
 from simulator.decorators import slow_down
-from simulator.time_increment import TimeIncrementMixin as TIM
+# from simulator.time_increment import TimeIncrementMixin as TIM
 from simulator.flowchart import Flowchart
 
 

@@ -28,5 +28,5 @@ step,parent_id,name,type,description,next,min,max,mean,stdev,distribution,weight
 27,26,gate 6,gate,,,,,,,,
 28,26,duration 6,duration,,,,,,,,
 29,26,cost 6,cost,,,,,,,,
-30,26,next 6,next,,31,,,,,,
+30,26,next 6,next,,20,,,,,,
 31,,destination,step,the last step,,,,,,,
