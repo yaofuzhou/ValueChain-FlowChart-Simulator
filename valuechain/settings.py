@@ -12,6 +12,7 @@ import time
 from datetime import datetime, timedelta
 from numpy.random import SeedSequence, default_rng
 
+from auxiliary.read_datetime import start_with_plus
 from auxiliary.read_datetime import str_to_datetime, str_to_later_datetime
 from auxiliary.read_datetime import datetime_accepts, final_datetime_accepts
 
@@ -136,15 +137,13 @@ else:
 
             elif line.lstrip().startswith("ini_datetime"):
                 ini_datetime = line.replace("ini_datetime", "") \
-                               .replace("=", "").replace("'", "") \
-                               .replace("\"", "")
+                               .replace("=", "")
                 ini_datetime = str_to_datetime(ini_datetime)
 
             elif line.lstrip().startswith("final_datetime"):
                 final_datetime = line.replace("final_datetime", "") \
-                               .replace("=", "").replace("'", "") \
-                               .replace("\"", "")
-                if final_datetime.lstrip().startswith("+"):
+                               .replace("=", "")
+                if start_with_plus(final_datetime):
                     final_datetime = str_to_later_datetime(final_datetime,
                                                            ini_datetime)
                 else:

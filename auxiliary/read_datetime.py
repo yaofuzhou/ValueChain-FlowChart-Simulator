@@ -21,10 +21,18 @@ format_datetime = re.compile(
     )
 
 format_delta_daytime = re.compile(
-    r"\+\s*(?=\S)(((?P<d_day>[1-9]\d*)\s*(day|days|day\(s\))\s*)?"
+    r"\s*\+\s*(?=\S)(((?P<d_day>[1-9]\d*)\s*(day|days|day\(s\))\s*)?"
     + r"(?P<d_time>(?P<d_HH>[0-1][0-9]|2[0-3]):?(?P<d_MM>[0-5][0-9]):?"
     + r"(?P<d_SS>[0-5][0-9](\.\d*)?)?\s*)?)"
     )
+
+
+def start_with_plus(line):
+    if line.replace(" ", "").replace("'", "").replace("\"", "") \
+        .startswith("+"):
+        return True
+    else:
+        return False
 
 
 def str_to_datetime(datetime_str):

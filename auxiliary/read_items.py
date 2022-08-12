@@ -1,6 +1,9 @@
 import os
 import csv
 
+from valuechain.settings import ini_datetime
+from auxiliary.read_datetime import start_with_plus
+from auxiliary.read_datetime import str_to_datetime, str_to_later_datetime
 
 class ReadItems():
     """ A singleton to read a input_path/*.items.csv and convert it to a
@@ -20,6 +23,14 @@ class ReadItems():
             reader = csv.DictReader(csv_file)
             for row in reader:
                 id = row.pop("item", None)
+                if "initial_datetime" in row:
+                    initial_datetime = row["initial_datetime"]
+                    if start_with_plus(initial_datetime):
+                        initial_datetime =\
+                            str_to_later_datetime(initial_datetime, ini_datetime)
+                    else:
+                        initial_datetime = str_to_datetime(initial_datetime)
+                    row["initial_datetime"] = initial_datetime
                 self.dict_init_items[id] \
                     = {key: value for key, value in row.items() if value}
         return self.dict_init_items
