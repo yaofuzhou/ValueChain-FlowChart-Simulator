@@ -1,14 +1,15 @@
 import os
 import csv
 
-from valuechain.settings import ini_datetime
+# from valuechain.settings import ini_datetime
+from valuechain.settings import input_path
 
 
-class ReadSteps():
+class _ReadSteps():
     """ A singleton to read a input_path/*.steps.csv and convert it to a
     dictionary of flowchart for the simulation """
 
-    def __init__(self, input_path):
+    def __init__(self):
         self.dict_flowchart = {}
         csv_files = [file for file in os.listdir(input_path)
                      if file.endswith('.steps.csv')]
@@ -18,7 +19,7 @@ class ReadSteps():
         self.csv_file = input_path+csv_files[0]
 
     def generate_flowchart(self):
-        self.dict_flowchart["datetime"] = ini_datetime
+        # self.dict_flowchart["datetime"] = ini_datetime
         with open(self.csv_file) as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
@@ -35,9 +36,19 @@ class ReadSteps():
         return self.dict_flowchart
 
 
+    def __repr__(self):
+        return str(self.generate_flowchart())
+
+
+steps_read = _ReadSteps()
+dict_flowchart = steps_read.generate_flowchart()
+# print("\nsteps:")
+# print(str(steps_read),"\n")
+
+
 if __name__ == "__main__":
     input_path = "/Users/yaofuzhou/Documents/ValueChainSimulator/" \
         + "valuechain/scenarios/test/"
-    a = ReadSteps(input_path)
+    a = _ReadSteps(input_path)
 
     print(a.generate_flowchart())
