@@ -6,8 +6,8 @@ from auxiliary.read_datetime import str_to_datetime, str_to_later_datetime
 
 
 class ReadItems():
-    """ A singleton to read a input_path/*.items.csv and convert it to a
-    dictionary for the initial placement of items in the simulation """
+    """ Reads a input_path/*.items.csv and convert it to a dictionary for the
+    initial placement of items in the simulation """
 
     def __init__(self, ini_datetime, input_path):
         self.ini_datetime = ini_datetime

@@ -19,16 +19,20 @@ class Item():  # can inherit from a mixin class for easy output/log
     def __init__(self, id):
         self.id = id
         info = items.get_item_info(self.id)
-        self.name = info.get('name')
-        # get tpye
-        # has component
-        # belongs to
-        # current position
-        # initial position
-        # initial time
+        self.name = info.get("name")
+        self.description = info.get("description")
+        self.type = info.get("type")
+        self.ini_position = info.get("initial_position")
+        self.ini_datetime = info.get("initial_datetime")
         # other extendable/optional attribubes
 
+    def __repr__(self):
+        return str(self.description)
+
     def move(self, target):
+        # belongs to, this is something that gets updated
+        # has component, this is something that gets updated
+        # current position
         pass
 
     def log_something(self):

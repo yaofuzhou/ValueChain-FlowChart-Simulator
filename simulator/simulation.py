@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from simulator.decorators import slow_down
 # from simulator.time_increment import TimeIncrementMixin as TIM
-from simulator.items import Items, items
+from simulator.items import items
 from simulator.flowchart import flowchart
 
 
@@ -17,13 +17,12 @@ def a_simulation(trial_id, rng_, settings_queue, dict_flowchart,
 
     flowchart.set_dict_steps(dict_flowchart)
     items.set_dict_items(dict_ini_items)
-    # print("\n items:")
-    # print(str(items))
-    # print("\n flowchart:")
-    # print(str(flowchart))
-    # flowchart = Flowchart(dict_flowchart, dict_init_items)
-    # flowchart.put_items_on_steps()
-    # flowchart.move_once()
+    
+    steps = flowchart.steps()
+    items_list = items.items()
+    
+    print(items_list[1].id)
+    print(steps[0].id)
 
     day_delta = timedelta(days=1) ############
     print(f"Process {os.getpid()}: trial {trial_id} with RNG {rng_}") #########

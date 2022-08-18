@@ -5,8 +5,8 @@ from valuechain.settings import input_path
 
 
 class ReadSteps():
-    """ A singleton to read a input_path/*.steps.csv and convert it to a
-    dictionary of flowchart for the simulation """
+    """ Reads a input_path/*.steps.csv and convert it to a dictionary of
+    flowchart for the simulation """
 
     def __init__(self, input_path):
         self.dict_flowchart = {}
@@ -37,12 +37,6 @@ class ReadSteps():
 
     def __repr__(self):
         return str(self.generate_flowchart())
-
-
-# steps_read = ReadSteps()
-# dict_flowchart = steps_read.generate_flowchart()
-# print("\nsteps:")
-# print(str(steps_read),"\n")
 
 
 if __name__ == "__main__":
