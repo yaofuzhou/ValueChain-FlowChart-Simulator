@@ -3,17 +3,20 @@ from datetime import timedelta
 
 from simulator.decorators import slow_down
 # from simulator.time_increment import TimeIncrementMixin as TIM
-from simulator.flowchart import _Flowchart
+from simulator.items import Items, items
+from simulator.flowchart import flowchart
 
 
 # @slow_down(2)
-def a_simulation(trial_id, rng_, settings_queue, flowchart,
-                 items, budget_schedule_queue, result_queue):
+def a_simulation(trial_id, rng_, settings_queue, dict_flowchart,
+                 dict_ini_items, budget_schedule_queue, result_queue):
     """Simulation Main Body"""
 
     ini_datetime, final_datetime, num_bins, probability_log \
         = settings_queue.get()
 
+    flowchart.set_dict_steps(dict_flowchart)
+    items.set_dict_items(dict_ini_items)
     # print("\n items:")
     # print(str(items))
     # print("\n flowchart:")

@@ -1,12 +1,12 @@
-from auxiliary.read_items import dict_init_items
-
-
-class _Items():
+class Items():
     def __init__(self):
-        self._items = dict_init_items
+        self._items = {}
+
+    def set_dict_items(self, new_dict):
+       self._items = new_dict
 
     def items(self):
-        return [Item(id_) for id_ in sorted(self._itemss)]
+        return [Item(id_) for id_ in sorted(self._items)]
 
     def get_item_info(self, item_id):
         info = self._items.get(item_id)
@@ -34,4 +34,4 @@ class Item():  # can inherit from a mixin class for easy output/log
     def log_something(self):
         pass
 
-items = _Items()
+items = Items()

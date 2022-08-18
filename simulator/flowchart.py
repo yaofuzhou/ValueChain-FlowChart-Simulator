@@ -1,8 +1,8 @@
-from auxiliary.read_steps import dict_flowchart
-
-
-class _Flowchart():
+class Flowchart():
     def __init__(self):
-        self._steps = dict_flowchart
+        self._steps = {}
 
-flowchart = _Flowchart()
+    def set_dict_steps(self, new_dict):
+       self._steps = new_dict
+
+flowchart = Flowchart()

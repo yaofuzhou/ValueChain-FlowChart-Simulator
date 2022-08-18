@@ -11,10 +11,10 @@ from simulator.simulation import a_simulation
 def main():
     import valuechain.settings as vcs
     from auxiliary.input_checks import InputChecks
-    # from auxiliary.read_items import ReadItems
-    # from auxiliary.read_steps import ReadSteps
-    from simulator.items import items
-    from simulator.flowchart import flowchart
+    from auxiliary.read_items import ReadItems
+    from auxiliary.read_steps import ReadSteps
+    # from simulator.items import items
+    # from simulator.flowchart import flowchart
 
     manager = Manager()
     settings_queue = manager.Queue()
@@ -29,18 +29,14 @@ def main():
 
     InputChecks(vcs.input_path)
 
-    # items_read = ReadItems(vcs.ini_datetime, vcs.input_path)
-    # dict_init_items = items_read.place_items()
-    # print(str(items_read),"\n")
-    # items = Items(dict_init_items)
+    items_read = ReadItems(vcs.ini_datetime, vcs.input_path)
+    dict_ini_items = items_read.init_items()
 
-    # steps_read = ReadSteps(vcs.input_path)
-    # dict_flowchart = steps_read.generate_flowchart()
-    # items_read = ReadItems(vcs.input_path)
-    # dict_init_items = items_read.place_items()
+    steps_read = ReadSteps(vcs.input_path)
+    dict_flowchart = steps_read.generate_flowchart()
 
-    pool_tuple = [(i, vcs.rng_list[i], settings_queue, flowchart,
-                   items, budget_schedule_queue,
+    pool_tuple = [(i, vcs.rng_list[i], settings_queue, dict_flowchart,
+                   dict_ini_items, budget_schedule_queue,
                    result_queue)
                   for i in range(vcs.num_trials)]
 
