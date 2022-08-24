@@ -35,10 +35,10 @@ def main():
     steps_read = ReadSteps(vcs.input_path)
     dict_flowchart = steps_read.generate_flowchart()
 
-    pool_tuple = [(i, vcs.rng_list[i], settings_queue, dict_flowchart,
+    pool_tuple = ((i, vcs.rng_list[i], settings_queue, dict_flowchart,
                    dict_ini_items, budget_schedule_queue,
                    result_queue)
-                  for i in range(vcs.num_trials)]
+                  for i in range(vcs.num_trials))
 
     print(f"Starting simulation with {vcs.num_trials} trials...\n")
 

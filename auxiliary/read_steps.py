@@ -1,8 +1,6 @@
 import os
 import csv
 
-from valuechain.settings import input_path
-
 
 class ReadSteps():
     """ Reads a input_path/*.steps.csv and convert it to a dictionary of
@@ -33,7 +31,6 @@ class ReadSteps():
                 self.dict_flowchart[id][key] = component
 
         return self.dict_flowchart
-
 
     def __repr__(self):
         return str(self.generate_flowchart())

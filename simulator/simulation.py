@@ -15,14 +15,17 @@ def a_simulation(trial_id, rng_, settings_queue, dict_flowchart,
     ini_datetime, final_datetime, num_bins, probability_log \
         = settings_queue.get()
 
+    print("flowchart:\n", dict_flowchart, "\n")  #######
+    print("dict_ini_items:\n", dict_ini_items, "\n")  #######
+
     flowchart.set_dict_steps(dict_flowchart)
     items.set_dict_items(dict_ini_items)
-    
+
     steps = flowchart.steps()
     items_list = items.items()
-    
-    print(items_list[1].id)
-    print(steps[0].id)
+
+    print(items_list)
+    print(steps)
 
     day_delta = timedelta(days=1) ############
     print(f"Process {os.getpid()}: trial {trial_id} with RNG {rng_}") #########

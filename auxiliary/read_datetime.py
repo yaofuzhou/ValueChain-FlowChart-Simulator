@@ -3,15 +3,15 @@
 import re
 from datetime import date, datetime, timedelta
 
-datetime_accepts = ["today", "now", "tomorrow", "yesterday", "yyyy-mm-dd",
-                    "yyyy-mm-dd HH:MM:SS.SS"]
+datetime_accepts = ("today", "now", "tomorrow", "yesterday", "yyyy-mm-dd",
+                    "yyyy-mm-dd HH:MM:SS.SS")
 
-delta_datetime_accepts = ["+[integer] day(s)", "+HH:MM:SS.SS",
-                          "+[integer] day(s) HH:MM:SS.SS"]
+delta_datetime_accepts = ("+[integer] day(s)", "+HH:MM:SS.SS",
+                          "+[integer] day(s) HH:MM:SS.SS")
 
-final_datetime_accepts = [
+final_datetime_accepts = (
     *datetime_accepts, "\n# +[integer] day(s)", "+HH:MM:SS.SS",
-    "+[integer] day(s) HH:MM:SS.SS"]
+    "+[integer] day(s) HH:MM:SS.SS")
 
 format_datetime = re.compile(
     r"(?P<date>(?P<YYYY>\d{4})[-/\.]?(?P<mm>0[1-9]|1[0-2])[-/\.]?"

@@ -22,9 +22,9 @@ _result_dir_relative = "result_" + "_".join(time.asctime().replace(":", "")
                                                 .split())
 _result_dir = os.path.join(_results_dir, _result_dir_relative)
 
-_enable_hyperthreading_accepts = ["true", "false", "yes", "no", "y", "n"]
-_true_accepts = ["true", "yes", "y"]
-_false_accepts = ["false", "no", "n"]
+_enable_hyperthreading_accepts = ("true", "false", "yes", "no", "y", "n")
+_true_accepts = ("true", "yes", "y")
+_false_accepts = ("false", "no", "n")
 
 input_path_default = "scenarios/input/"
 seed_default = 20

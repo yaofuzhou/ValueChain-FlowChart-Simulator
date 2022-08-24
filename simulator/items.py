@@ -1,9 +1,15 @@
+from simulator.container import Container
+from simulator.duration import Duration
+from simulator.size import Size
+from simulator.cost import Cost
+
+
 class Items():
     def __init__(self):
         self._items = {}
 
     def set_dict_items(self, new_dict):
-       self._items = new_dict
+        self._items = new_dict
 
     def items(self):
         return [Item(id_) for id_ in sorted(self._items)]
@@ -24,7 +30,28 @@ class Item():  # can inherit from a mixin class for easy output/log
         self.type = info.get("type")
         self.ini_position = info.get("initial_position")
         self.ini_datetime = info.get("initial_datetime")
-        # other extendable/optional attribubes
+        self.previous_position = None
+        self.position = None
+
+        container_info = []
+        duration_info= []
+        size_info = []
+        cost_info = []
+        for k, v in info.items():
+            if isinstance(v, dict):
+                if v["type"] == "container":
+                    container_info.append(v)
+                if v["type"] == "duration":
+                    duration_info.append(v)
+                if v["type"] == "cost":
+                    size_info.append(v)
+                if v["type"] == "next":
+                    cost_info.append(v)
+
+        self.container = Container(container_info)
+        self.duration = Duration(duration_info)
+        self.size = Size(size_info)
+        self.cost = Cost(cost_info)
 
     def __repr__(self):
         return str(self.description)
@@ -37,5 +64,6 @@ class Item():  # can inherit from a mixin class for easy output/log
 
     def log_something(self):
         pass
+
 
 items = Items()
